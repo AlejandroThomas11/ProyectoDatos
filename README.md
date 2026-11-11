@@ -390,3 +390,86 @@ Como continuación de este trabajo, podrían estudiarse técnicas específicas p
 También sería interesante analizar otras arquitecturas Transformer y diferentes estrategias de ajuste fino, así como estudiar representaciones que aprovechen directamente la estructura jerárquica de EuroSciVoc.
 
 Estas alternativas permitirían profundizar en el problema y explorar posibles mejoras sobre los resultados obtenidos.
+
+## 7. Reproducibilidad del proyecto
+
+### 7.1. Entorno de desarrollo
+
+El proyecto se ha desarrollado en Python utilizando Google Colab.
+
+Las principales bibliotecas utilizadas son:
+
+- `numpy` y `pandas`: tratamiento y análisis de datos.
+- `scikit-learn`: representaciones TF-IDF, clasificadores SVM y evaluación.
+- `spaCy`: preprocesamiento lingüístico.
+- `gensim`: entrenamiento de Word2Vec.
+- `PyTorch`: implementación y entrenamiento de redes neuronales.
+- `transformers`, `datasets` y `accelerate`: modelos DistilBERT y fine-tuning.
+- `matplotlib` y `seaborn`: representación gráfica de resultados.
+- `scipy`, `joblib` y `wordcloud`: operaciones auxiliares, almacenamiento de modelos y visualización.
+
+El notebook contiene las instrucciones de instalación de las bibliotecas adicionales utilizadas durante el desarrollo.
+
+Para los experimentos con DistilBERT, especialmente el fine-tuning, se recomienda utilizar un entorno con GPU.
+
+### 7.2. Archivos necesarios
+
+El código principal se encuentra en el notebook [`ProyectoDatos_v2.ipynb`](ProyectoDatos_v2.ipynb).
+
+Los datos originales se proporcionan mediante el archivo `H2020.zip`, que contiene:
+
+- `projects.xlsx`: información de los proyectos de investigación.
+- `SciVocCodes.xlsx`: catálogo de códigos y categorías EuroSciVoc.
+
+Estos datos no se incluyen directamente en el repositorio. Para ejecutar el proyecto es necesario disponer de los archivos originales facilitados para la práctica.
+
+### 7.3. Ejecución del notebook
+
+Para ejecutar el proyecto desde los datos originales:
+
+1. Abrir el notebook en Google Colab.
+2. Subir el archivo `H2020.zip` al directorio `/content/`.
+3. Instalar las dependencias indicadas en las celdas correspondientes.
+4. Ejecutar los apartados de preparación de datos, representación del texto, entrenamiento y evaluación siguiendo su orden.
+
+Durante el desarrollo se incorporaron celdas para guardar y recuperar resultados cuando Google Colab reiniciaba la sesión. Estas celdas utilizan archivos ZIP intermedios que se generan durante el propio trabajo y permiten continuar los experimentos sin repetir los entrenamientos anteriores.
+
+Por tanto, al reanudar una sesión es necesario disponer de la copia de seguridad correspondiente. Si se realiza una ejecución continua desde el principio, las celdas de recuperación deben revisarse según el estado de los archivos y variables disponibles.
+
+La ejecución completa, especialmente la extracción de embeddings y el fine-tuning de DistilBERT, puede requerir tiempos de procesamiento elevados y recursos de GPU.
+
+### 7.4. Resultados
+
+El repositorio incluye las principales gráficas en la carpeta [`graficas`](graficas/).
+
+Las tablas y figuras del README permiten consultar los resultados experimentales y las conclusiones del proyecto sin necesidad de ejecutar nuevamente los modelos.
+
+Los modelos entrenados y los resultados intermedios se guardaron durante el desarrollo en una carpeta de resultados y en copias de seguridad independientes, que no forman parte de este repositorio.
+
+## 8. Referencias y herramientas utilizadas
+
+Para el desarrollo del proyecto se han utilizado los siguientes recursos:
+
+### 8.1. Conjunto de datos
+
+- **Comisión Europea — CORDIS:** fuente de información sobre los proyectos de investigación financiados por el programa Horizonte 2020. [Portal de datos de CORDIS](https://data.europa.eu/data/datasets/cordish2020projects).
+
+- **EuroSciVoc:** clasificación temática utilizada para asignar las categorías científicas a los proyectos. Los códigos y sus correspondencias se han obtenido del archivo `SciVocCodes.xlsx` facilitado para la práctica.
+
+### 8.2. Bibliotecas y modelos
+
+- **Scikit-learn:** implementación de TF-IDF, SVM, herramientas de preprocesamiento y métricas de evaluación. [Documentación oficial](https://scikit-learn.org/stable/).
+
+- **spaCy:** procesamiento lingüístico y lematización de los resúmenes. [Documentación oficial](https://spacy.io/usage).
+
+- **Gensim:** entrenamiento de la representación Word2Vec. [Documentación oficial](https://radimrehurek.com/gensim/).
+
+- **PyTorch:** desarrollo y entrenamiento de la red neuronal. [Documentación oficial](https://pytorch.org/docs/stable/).
+
+- **Hugging Face Transformers:** utilización de DistilBERT para la extracción de embeddings y el fine-tuning. [Documentación oficial](https://huggingface.co/docs/transformers/index).
+
+### 8.3. Publicaciones de referencia
+
+- Mikolov, T. et al. (2013). *Efficient Estimation of Word Representations in Vector Space*. [arXiv:1301.3781](https://arxiv.org/abs/1301.3781).
+
+- Sanh, V. et al. (2019). *DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter*. [arXiv:1910.01108](https://arxiv.org/abs/1910.01108).

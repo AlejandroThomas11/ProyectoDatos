@@ -31,6 +31,8 @@ Como algunos proyectos tienen asociados varios códigos EuroSciVoc, se decidió 
 
 Se descartaron los registros para los que no fue posible obtener una categoría válida. De los 35.378 proyectos originales, se conservaron 31.982, distribuidos en 39 categorías de segundo nivel, pertenecientes a 6 áreas generales de primer nivel.
 
+![Distribución de proyectos por categoría EuroSciVoc de nivel 2](graficas/distribucion_clases_nivel2.png)
+
 ### 2.3. División de los datos
 
 Los proyectos se dividieron en tres conjuntos independientes:
@@ -86,6 +88,8 @@ Posteriormente, se entrenó un clasificador SVM lineal mediante `LinearSVC`. Par
 
 La selección se realizó utilizando el F1-macro del conjunto de validación.
 
+![Curva de validación del SVM con TF-IDF](graficas/curva_validacion_svm_tfidf.png)
+
 ### 3.3. Word2Vec y SVM lineal
 
 Como segunda representación, se utilizó Word2Vec para obtener vectores que representaran las relaciones entre las palabras.
@@ -128,6 +132,10 @@ Inicialmente se entrenó durante 12 épocas y posteriormente se amplió el entre
 
 La mejor configuración se obtuvo en la época 12. Se conservaron sus pesos para realizar posteriormente la evaluación sobre el conjunto de prueba.
 
+![Evolución del F1-macro de la red neuronal PyTorch](graficas/f1_red_pytorch.png)
+
+![Evolución de la pérdida de entrenamiento de la red PyTorch](graficas/perdida_red_pytorch.png)
+
 ### 3.6. Fine-tuning de DistilBERT
 
 Finalmente, se realizó un ajuste fino (*fine-tuning*) de DistilBERT para adaptar directamente el modelo preentrenado a la clasificación de las 39 categorías científicas.
@@ -156,6 +164,10 @@ El modelo se evaluó al finalizar cada época, utilizando el F1-macro de validac
 
 Este experimento permitió comparar el uso de un Transformer como extractor fijo de características frente a su adaptación mediante fine-tuning.
 
+![Evolución del F1-macro durante el fine-tuning de DistilBERT](graficas/f1_finetuning_distilbert.png)
+
+![Evolución de la pérdida durante el fine-tuning de DistilBERT](graficas/perdida_finetuning_distilbert.png)
+
 ## 4. Resultados experimentales
 
 ### 4.1. Comparación de los modelos
@@ -171,6 +183,8 @@ Los resultados obtenidos fueron los siguientes:
 | DistilBERT congelado + SVM | 0,4116 | 0,2601 | 0,3958 | 0,2453 |
 | DistilBERT + red PyTorch | 0,4557 | 0,3002 | 0,4432 | 0,2948 |
 | DistilBERT con fine-tuning | 0,5656 | 0,3256 | 0,5556 | 0,3149 |
+
+![Comparación general de los modelos](graficas/comparacion_general_modelos.png)
 
 ### 4.2. Análisis de los resultados
 
@@ -212,6 +226,8 @@ Estos resultados indican que aproximadamente un tercio de los errores se produce
 
 Entre las confusiones más frecuentes se encuentran las relacionadas con ciencias biológicas, medicina e ingeniería, que pueden compartir terminología en sus resúmenes.
 
+![Matriz de confusión del modelo TF-IDF + SVM en prueba](graficas/matriz_confusion_tfidf_test.png)
+
 ### 4.5. Análisis de incertidumbre
 
 Para estimar la incertidumbre de los resultados se utilizó el método bootstrap, realizando 1.000 repeticiones con muestreo aleatorio con reemplazo sobre el conjunto de prueba.
@@ -231,6 +247,8 @@ También se compararon Word2Vec + SVM y la red neuronal PyTorch. En este caso, l
 
 Como este último intervalo incluye el cero, no se dispone de evidencia suficiente para afirmar que la diferencia observada entre ambos modelos sea consistente.
 
+![Comparaciones estadísticas mediante bootstrap](graficas/comparaciones_estadisticas.png)
+
 ### 4.6. Comparación entre los niveles 1 y 2 de EuroSciVoc
 
 Además de la clasificación principal en 39 categorías de segundo nivel, se estudió el rendimiento de diferentes representaciones al utilizar las 6 categorías generales de primer nivel de EuroSciVoc.
@@ -241,9 +259,11 @@ Los resultados obtenidos mediante F1-macro fueron los siguientes:
 
 | Representación | F1-macro nivel 1 | F1-macro nivel 2 |
 |---|---:|---:|
-| TF-IDF + SVM | 0,6286 | 0,4072 |
-| Word2Vec + SVM | 0,5491 | 0,2866 |
-| DistilBERT congelado + SVM | 0,5874 | 0,2453 |
+| TF-IDF + SVM | 0,6286 | 0,4127 |
+| Word2Vec + SVM | 0,5491 | 0,2922 |
+| DistilBERT congelado + SVM | 0,5874 | 0,2601 |
+
+![Comparación del F1-macro entre los niveles 1 y 2 de EuroSciVoc](graficas/comparacion_niveles_1_2.png)
 
 Los tres modelos obtuvieron un F1-macro superior al clasificar los proyectos en categorías de primer nivel.
 
@@ -298,6 +318,8 @@ Los resultados de los tres modelos seleccionados fueron los siguientes:
 | Solo texto | 0,5371 | 0,4127 | 0,5281 | 0,4072 |
 | Solo metadatos | 0,1466 | 0,0223 | 0,1471 | 0,0214 |
 | Texto + metadatos | 0,5365 | 0,4123 | 0,5276 | 0,4069 |
+
+![Comparación del F1-macro entre texto, metadatos y modelo combinado](graficas/grafica_extension_f1.png)
 
 Los resultados muestran que el texto proporciona mucha más información útil para clasificar los proyectos que los metadatos administrativos.
 

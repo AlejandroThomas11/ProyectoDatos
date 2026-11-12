@@ -1,0 +1,28 @@
+
+# Datos originales del proyecto
+H2020.zip
+projects.xlsx
+SciVocCodes.xlsx
+datos/
+
+# Resultados y modelos entrenados
+resultados/
+*.joblib
+*.pth
+*.pt
+*.safetensors
+*.npz
+
+# Copias de seguridad
+respaldo_*.zip
+graficas_readme.zip
+
+# Archivos temporales de Python
+__pycache__/
+*.pyc
+
+# Archivos temporales de Jupyter
+.ipynb_checkpoints/
+
+# Archivos de configuración privada
+.env
